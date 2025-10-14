@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"strconv"
 
-	cs "github.com/alibabacloud-go/cs-20151215/v5/client"
-	"github.com/alibabacloud-go/tea/tea"
 	"github.com/rancher/ali-operator/pkg/alibaba/services"
 	aliv1 "github.com/rancher/ali-operator/pkg/apis/ali.cattle.io/v1"
+	cs "github.com/rancher/muchang/cs/client"
+	"github.com/rancher/muchang/utils/tea"
 	"github.com/sirupsen/logrus"
 )
 
@@ -88,9 +88,10 @@ func GetAddons(configSpec *aliv1.AliClusterConfigSpec) []*cs.Addon {
 
 	addons := make([]*cs.Addon, len(configSpec.Addons))
 	for i, addon := range configSpec.Addons {
+		currentAddon := addon
 		addons[i] = &cs.Addon{
-			Name:   &addon.Name,
-			Config: &addon.Config,
+			Name:   &currentAddon.Name,
+			Config: &currentAddon.Config,
 		}
 	}
 

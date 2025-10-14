@@ -1,4 +1,4 @@
-name: Verify
+name: Unit tests
 on:
   pull_request:
   push:
@@ -7,11 +7,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v4
     - name: Install Go
-      uses: actions/setup-go@v6
+      uses: actions/setup-go@v5
       with:
         go-version: 1.24.x
-    - name: Run make verify
+    - name: Run tests
       run: |
-        make verify
+        make test

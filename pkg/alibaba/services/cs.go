@@ -4,11 +4,11 @@ import (
 	"context"
 	"errors"
 
-	cs "github.com/alibabacloud-go/cs-20151215/v5/client"
-	openapi "github.com/alibabacloud-go/darabonba-openapi/v2/client"
-	util "github.com/alibabacloud-go/tea-utils/v2/service"
-	"github.com/alibabacloud-go/tea/tea"
-	credential "github.com/aliyun/credentials-go/credentials"
+	credential "github.com/rancher/muchang/credentials"
+	cs "github.com/rancher/muchang/cs/client"
+	openapi "github.com/rancher/muchang/darabonba-openapi/client"
+	"github.com/rancher/muchang/utils/tea"
+	util "github.com/rancher/muchang/utils/tea-utils/service"
 )
 
 var errEmptyRegion = errors.New("regionId can not be empty")
@@ -32,8 +32,8 @@ type clustersClient struct {
 	client *cs.Client
 }
 
-func NewClustersClient(creds *Credentials, regionId string) (*clustersClient, error) {
-	if regionId == "" {
+func NewClustersClient(creds *Credentials, regionID string) (ClustersClientInterface, error) {
+	if regionID == "" {
 		return nil, errEmptyRegion
 	}
 
@@ -45,7 +45,7 @@ func NewClustersClient(creds *Credentials, regionId string) (*clustersClient, er
 	openAPICfg := &openapi.Config{
 		Credential: credentials,
 		Protocol:   tea.String("https"),
-		Endpoint:   tea.String("cs." + regionId + ".aliyuncs.com"),
+		Endpoint:   tea.String("cs." + regionID + ".aliyuncs.com"),
 	}
 
 	client, err := cs.NewClient(openAPICfg)
